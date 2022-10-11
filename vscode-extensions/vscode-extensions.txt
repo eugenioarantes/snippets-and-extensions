@@ -1,0 +1,31 @@
+• Bracket Pair Colorizer 2
+
+• Alphabetical Sorter
+
+• Auto Rename Tag
+
+• Code Runner
+
+• Code Spell Checker
+
+• Color Highlight
+
+• CSS Modules
+
+• DotENV
+
+• EditorConfig for VS Code
+
+• Error Lens
+
+• ESLint
+
+• Material Icon Theme
+
+• Tabnine AI Autocomplete for Javascript, Python, Typescript, PHP, Go, Java, Ruby & more
+
+• Template String Converter
+
+• vscode-styled-components
+
+• Live Server

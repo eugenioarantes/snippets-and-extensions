@@ -1,0 +1,128 @@
+{
+	"Convert Pixel to Rem": {
+		"prefix": "qqq",
+		"body": [
+			"${convertPixelToRem($1)};"
+		],
+		"description": "Convert pixel to rem"
+	},
+
+	"Create React.FC": {
+		"prefix": "rfc",
+		"body": [
+			"const ${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}: React.FC = () => {",
+			"  ",
+			"  return (",
+			"    $1",
+			"  );",
+			"};",
+			"",
+			"export default ${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/};"
+		],
+		"description": "Create a React.FC"
+	},
+
+	"Create UseEffect": {
+		"prefix": "eee",
+		"body": [
+			"useEffect(() => {",
+			"  $1",
+			"}, [$2]);"
+		  ],
+		"description": "Create UseEffect"
+	},
+
+	"Create UseState": {
+		"prefix": "sss",
+		"body": [
+			"const [$1] = useState($2);"
+		  ],
+		"description": "Create UseState"
+	},
+
+	"Create useCallback": {
+		"prefix": "ucb",
+		"body": [
+			"const $1 = useCallback(",
+			"async () => {",
+			"",
+			"},",
+			"[$2],",
+		");"
+		  ],
+		"description": "Create useCallback"
+	},
+
+	"Create const Function": {
+		"prefix": "ccc",
+		"body": [
+			"const $1 = ( $2 ): void$3 => {",
+			"",
+			"};"
+		  ],
+		"description": "Create const Function"
+	},
+
+	"Create function": {
+		"prefix": "fff",
+		"body": [
+			"function $1 ( $2 ): void$3 {",
+			"",
+			"};"
+		  ],
+		"description": "Create Function"
+	},
+
+	"Create syleComponent": {
+		"prefix": "sc",
+		"body": [
+			"export const $1 = styled.div`",
+			"  $2",
+		"`;"
+		  ],
+		"description": "Create syleComponent"
+	},
+
+	"Create property variation syleComponent": {
+		"prefix": "scp",
+		"body": [
+			"${({ \\$propertyName }) =>",
+			"  \\$propertyName === 'condition' &&",
+			"  css`",
+			"    color: red;",
+			"  `};"
+		  ],
+		"description": "Create syleComponent"
+	},
+
+	"Create console.log": {
+		"prefix": "cl",
+		"body": [
+			"console.log($1);"
+		  ],
+		"description": "Create console.log"
+	},
+
+	"Context Provider": {
+		"prefix": "ctx",
+		"body": [
+			"import { createContext, useContext, useMemo, ReactNode, FC } from 'react';\n",
+      "interface ${1:$TM_FILENAME_BASE}ProviderProps {\n\tchildren: ReactNode;\n}\n",
+      "interface ${1}ContextData {}\n",
+      "const ${1}Context = createContext<${1}ContextData>({} as ${1}ContextData);\n",
+      "const ${1}Provider: FC<${1}ProviderProps> = ({ children }) => {",
+      "\n\nconst ${1/(.*)/${1:/downcase}/}Value = useMemo(() => ({  }), []);\n",
+      "\treturn (",
+      "\t\t<${1}Context.Provider value={${1/(.*)/${1:/downcase}/}Value}>",
+      "\t\t\t{children}",
+      "\t\t</${1}Context.Provider>\n\t);",
+      "}\n",
+      "function use${1}(): ${1}ContextData {",
+      "\tconst context = useContext(${1}Context);\n",
+      "\tif (!context) {",
+      "\t\tthrow new Error('use${1} must be used within a ${1}Provider');\n\t}\n",
+      "\treturn context;\n}\n",
+      "export { ${1}Provider, use${1} };\n"
+		]
+	}
+}
