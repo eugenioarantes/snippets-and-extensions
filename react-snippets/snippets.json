@@ -7,19 +7,36 @@
 		"description": "Convert pixel to rem"
 	},
 
-	"Create React.FC": {
+	"Create React Function Component": {
 		"prefix": "rfc",
 		"body": [
-			"const ${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}: React.FC = () => {",
-			"  ",
+			"function ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}}(): JSX.Element {",
 			"  return (",
-			"    $1",
+			"    <$2>",
+			"      $3",
+			"    </$2>",
 			"  );",
-			"};",
-			"",
-			"export default ${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/};"
+			"}\n",
+			"export default ${1};\n"
 		],
 		"description": "Create a React.FC"
+	},
+
+	"React Function Component with Props": {
+		"prefix": "rfcp",
+		"body": [
+			"interface ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}}Props {",
+			"  $2: $3;",
+			"}\n",
+			"function ${1}({ $2 }: ${1}Props): JSX.Element {",
+			"  return (",
+			"    <$4>",
+			"      $5",
+			"    </$4>",
+			"  );",
+			"}\n",
+			"export default ${1};\n"
+		]
 	},
 
 	"Create UseEffect": {
@@ -32,12 +49,9 @@
 		"description": "Create UseEffect"
 	},
 
-	"Create UseState": {
+	"Create Use State": {
 		"prefix": "sss",
-		"body": [
-			"const [$1] = useState($2);"
-		  ],
-		"description": "Create UseState"
+		"body": "const [$1, set${1/(.*)/${1:/capitalize}/}] = useState($2);"
 	},
 
 	"Create useCallback": {
@@ -95,6 +109,16 @@
 		"description": "Create syleComponent"
 	},
 
+	"Create property variation syleComponent Short": {
+		"prefix": "scps",
+		"body": "${({ propertyName }) => propertyName.$1}"
+	},
+
+	"Media Query": {
+		"prefix": "mq",
+		"body": "@media (max-width: $1px) {\n\t$2\n}"
+	},
+
 	"Create console.log": {
 		"prefix": "cl",
 		"body": [
@@ -106,23 +130,47 @@
 	"Context Provider": {
 		"prefix": "ctx",
 		"body": [
-			"import { createContext, useContext, useMemo, ReactNode, FC } from 'react';\n",
-      "interface ${1:$TM_FILENAME_BASE}ProviderProps {\n\tchildren: ReactNode;\n}\n",
-      "interface ${1}ContextData {}\n",
-      "const ${1}Context = createContext<${1}ContextData>({} as ${1}ContextData);\n",
-      "const ${1}Provider: FC<${1}ProviderProps> = ({ children }) => {",
-      "\n\nconst ${1/(.*)/${1:/downcase}/}Value = useMemo(() => ({  }), []);\n",
-      "\treturn (",
-      "\t\t<${1}Context.Provider value={${1/(.*)/${1:/downcase}/}Value}>",
-      "\t\t\t{children}",
-      "\t\t</${1}Context.Provider>\n\t);",
-      "}\n",
-      "function use${1}(): ${1}ContextData {",
-      "\tconst context = useContext(${1}Context);\n",
-      "\tif (!context) {",
-      "\t\tthrow new Error('use${1} must be used within a ${1}Provider');\n\t}\n",
-      "\treturn context;\n}\n",
-      "export { ${1}Provider, use${1} };\n"
+			"import { createContext, useContext, useMemo } from 'react';\n",
+			"interface ${1:$TM_FILENAME_BASE}ProviderProps {\n\tchildren: React.ReactNode;\n}\n",
+			"interface ${1}ContextData {}\n",
+			"const ${1}Context = createContext<${1}ContextData>({} as ${1}ContextData);\n",
+			"function ${1}Provider({ children }: ${1}ProviderProps) {",
+			"\n\nconst ${1/(.*)/${1:/downcase}/}Value = useMemo(() => ({  }), []);\n",
+			"\treturn (",
+			"\t\t<${1}Context.Provider value={${1/(.*)/${1:/downcase}/}Value}>",
+			"\t\t\t{children}",
+			"\t\t</${1}Context.Provider>\n\t);",
+			"}\n",
+			"function use${1}(): ${1}ContextData {",
+			"\tconst context = useContext(${1}Context);\n",
+			"\tif (!context) {",
+			"\t\tthrow new Error('use${1} must be used within a ${1}Provider');\n\t}\n",
+			"\treturn context;\n}\n",
+			"export { ${1}Provider, use${1} };\n"
+		]
+	},
+
+	"Init test structure": {
+		"prefix": "tstinit",
+		"body": [
+			"describe('$1', () => {",
+			"\tdescribe('$2', () => {",
+			"\t\tit('$3', () => {",
+			"\t\t\t$4",
+			"\t\t});",
+			"\t});",
+			"});\n"
+		]
+	},
+
+	"Describe it": {
+		"prefix": "dcbit",
+		"body": [
+			"describe('$1', () => {",
+			"\tit('$2', () => {",
+			"\t\t$3",
+			"\t});",
+			"});"
 		]
 	}
 }
